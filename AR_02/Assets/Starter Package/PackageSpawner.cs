@@ -22,6 +22,7 @@ using UnityEngine.XR.ARFoundation;
 public class PackageSpawner : MonoBehaviour
 {
     public DrivingSurfaceManager DrivingSurfaceManager;
+    [SerializeField] private int puntaje;
     public PackageBehaviour Package;
     public GameObject PackagePrefab;
 
@@ -33,6 +34,7 @@ public class PackageSpawner : MonoBehaviour
         {
             v = 1 - v;
             u = 1 - u;
+            
         }
 
         return (v1 * u) + (v2 * v);
@@ -67,6 +69,7 @@ public class PackageSpawner : MonoBehaviour
             if (Package == null)
             {
                 SpawnPackage(lockedPlane);
+                Debug.Log("se elmino");
             }
 
             var packagePosition = Package.gameObject.transform.position;

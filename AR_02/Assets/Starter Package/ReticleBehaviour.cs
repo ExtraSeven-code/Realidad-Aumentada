@@ -62,5 +62,5 @@ public class ReticleBehaviour : MonoBehaviour
             transform.position = hit.Value.pose.position;
         }
         Child.SetActive(CurrentPlane != null);
-    }
+        }
 }
