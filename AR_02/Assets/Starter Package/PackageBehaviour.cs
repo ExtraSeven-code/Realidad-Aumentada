@@ -23,4 +23,19 @@ using UnityEngine;
  */
 public class PackageBehaviour : MonoBehaviour
 {
+    public PackageSpawner spawner;
+    private int puntaje;
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player")) 
+        {
+            puntaje = PlayerPrefs.GetInt("puntaje", 0);
+            puntaje += 1;
+            PlayerPrefs.SetInt("puntaje", puntaje);
+            PlayerPrefs.Save();
+
+            spawner.UpdateScoreText(); 
+        }
+    }
 }

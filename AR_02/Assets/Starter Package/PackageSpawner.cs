@@ -18,13 +18,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.ARFoundation;
+using TMPro;
+
 
 public class PackageSpawner : MonoBehaviour
 {
     public DrivingSurfaceManager DrivingSurfaceManager;
+    public TextMeshProUGUI score;
     [SerializeField] private int puntaje;
     public PackageBehaviour Package;
     public GameObject PackagePrefab;
+
+    public void Start()
+    {
+        puntaje = PlayerPrefs.GetInt("puntaje", 0);
+        score.text = "Puntaje: " + puntaje.ToString();
+    }
 
     public static Vector3 RandomInTriangle(Vector3 v1, Vector3 v2)
     {
@@ -34,7 +43,6 @@ public class PackageSpawner : MonoBehaviour
         {
             v = 1 - v;
             u = 1 - u;
-            
         }
 
         return (v1 * u) + (v2 * v);
@@ -58,7 +66,10 @@ public class PackageSpawner : MonoBehaviour
         var packageClone = GameObject.Instantiate(PackagePrefab);
         packageClone.transform.position = FindRandomLocation(plane);
 
+
         Package = packageClone.GetComponent<PackageBehaviour>();
+        Package.spawner = this;
+
     }
 
     private void Update()
@@ -69,11 +80,17 @@ public class PackageSpawner : MonoBehaviour
             if (Package == null)
             {
                 SpawnPackage(lockedPlane);
-                Debug.Log("se elmino");
+
             }
 
             var packagePosition = Package.gameObject.transform.position;
             packagePosition.Set(packagePosition.x, lockedPlane.center.y, packagePosition.z);
         }
     }
+    public void UpdateScoreText()
+    {
+        puntaje = PlayerPrefs.GetInt("puntaje", 0);
+        score.text = "Puntaje: " + puntaje.ToString();
+    }
+
 }
